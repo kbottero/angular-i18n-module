@@ -66,13 +66,13 @@ I18N.prototype.i18n = {
   I18N.prototype.loadResources = function (url) {
     var deferred = this.$q.defer();
     this.$http.get(url)
-        .success((function (data) {
-          this.i18n.dictionary = data;
+        .then((function (response) {
+          this.i18n.dictionary = response.data;
           this.i18n.loaded = true;
           console.debug('i18n: locale successfully loaded');
           deferred.resolve();
-        }).bind(this))
-        .error((function () {
+        }).bind(this),
+        (function () {
           console.error('i18n: Cannot load locale');
           deferred.reject();
         }).bind(this));
